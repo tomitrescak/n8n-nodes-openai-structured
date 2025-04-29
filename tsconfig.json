@@ -18,5 +18,5 @@
     "skipLibCheck": true,
     "useUnknownInCatchVariables": false
   },
-  "include": ["nodes/**/*.ts"]
+  "include": ["nodes/**/*.ts", "./index.ts"]
 }
