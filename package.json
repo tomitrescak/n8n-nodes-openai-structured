@@ -1,0 +1,29 @@
+{
+  "name": "n8n-nodes-openai-structured",
+  "version": "0.1.0",
+  "description": "n8n node to call OpenAI Chat API with structured JSON schema using function calling.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint . --ext .ts",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n-nodes",
+    "openai",
+    "structured-output",
+    "function-calling"
+  ],
+  "author": "Tomas Trescak <tomi.trescak@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "n8n-core": "^1.45.0",
+    "n8n-workflow": "^1.45.0",
+    "openai": "^4.96.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "typescript": "^5.2.2"
+  }
+}
