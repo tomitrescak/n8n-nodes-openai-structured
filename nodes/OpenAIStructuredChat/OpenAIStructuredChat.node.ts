@@ -39,6 +39,13 @@ export class OpenAIStructuredChat implements INodeType {
         description: "The user prompt to send to OpenAI.",
       },
       {
+        displayName: "Temperature",
+        name: "temperature",
+        type: "number",
+        default: "1",
+        description: "Randomness level (0 = fixed, > 0 = random).",
+      },
+      {
         displayName: "JSON Function Schema",
         name: "jsonSchema",
         type: "json",
@@ -50,10 +57,16 @@ export class OpenAIStructuredChat implements INodeType {
         name: "model",
         type: "options",
         options: [
+          { name: "o1", value: "o1" },
+          { name: "o3-mini", value: "o3-mini" },
+          { name: "o4-mini", value: "o-4-mini" },
           { name: "gpt-4", value: "gpt-4" },
-          { name: "gpt-3.5-turbo-1106", value: "gpt-3.5-turbo-1106" },
+          { name: "gpt-4o", value: "gpt-4o" },
+          { name: "gpt-4o-mini", value: "gpt-4o-mini" },
+          { name: "gpt-4.1", value: "gpt-4.1" },
+          { name: "gpt-4.1-mini", value: "gpt-4.1-mini" },
         ],
-        default: "gpt-4",
+        default: "gpt-4o-mini",
         description: "Model to use. Must support function calling.",
       },
       {
@@ -84,23 +97,32 @@ export class OpenAIStructuredChat implements INodeType {
 
     for (let i = 0; i < items.length; i++) {
       const prompt = this.getNodeParameter("prompt", i) as string;
-      const jsonSchema = this.getNodeParameter("jsonSchema", i) as object;
+      const jsonSchema = this.getNodeParameter("jsonSchema", i) as string;
       const model = this.getNodeParameter("model", i) as string;
+      const temperature = parseInt(
+        this.getNodeParameter("temperature", i) as string
+      );
 
-      const response = await openai.responses.create({
+      const body: OpenAI.Responses.ResponseCreateParamsNonStreaming = {
         model,
         input: [{ role: "user", content: prompt }],
-        tools: [jsonSchema as Tool],
+        tools: [JSON.parse(jsonSchema) as Tool],
         text: {
           format: {
             type: "text",
           },
         },
-        reasoning: {
+
+        temperature: temperature,
+      };
+
+      if (model.startsWith("o")) {
+        body.reasoning = {
           effort: "medium",
-        },
-        temperature: 0,
-      });
+        };
+      }
+
+      const response = await openai.responses.create(body);
 
       const output: ResponseFunctionToolCall | null = response.output.find(
         (o) => o.status === "completed"

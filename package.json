@@ -1,38 +1,59 @@
 {
   "name": "n8n-nodes-openai-structured",
-  "version": "0.1.5",
-  "description": "n8n node to call OpenAI Chat API with structured JSON schema using function calling.",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc",
-    "lint": "eslint . --ext .ts",
-    "prepare": "npm run build"
+  "version": "0.1.7",
+  "description": "",
+  "keywords": [
+    "n8n-community-node-package"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "author": {
+    "name": "Tomas Trescak",
+    "email": "tomi.trescak@gmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tomitrescak/n8n-nodes-openai-structured.git"
+  },
+  "engines": {
+    "node": ">=18.10",
+    "pnpm": ">=9.1"
+  },
+  "packageManager": "pnpm@9.1.4",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier nodes credentials --write",
+    "lint": "eslint nodes credentials package.json",
+    "lintfix": "eslint nodes credentials package.json --fix",
+    "prepublishOnly": "pnpm build"
+  },
+  "files": [
+    "dist"
+  ],
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/nodes/OpenAIStructuredChat/OpenAIStructuredChat.credentials.js"
+      "dist/credentials/OpenAIStructuredChat.credentials.js"
     ],
     "nodes": [
       "dist/nodes/OpenAIStructuredChat/OpenAIStructuredChat.node.js"
     ]
   },
-  "keywords": [
-    "n8n-community-node-package",
-    "n8n-nodes",
-    "openai",
-    "structured-output",
-    "function-calling"
-  ],
-  "author": "Tomas Trescak <tomi.trescak@gmail.com>",
-  "license": "MIT",
-  "dependencies": {
-    "n8n-core": "^1.45.0",
-    "n8n-workflow": "^1.45.0",
-    "openai": "^4.96.0"
-  },
   "devDependencies": {
-    "eslint": "^8.50.0",
-    "typescript": "^5.2.2"
+    "@typescript-eslint/parser": "^7.15.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.1",
+    "gulp": "^4.0.2",
+    "prettier": "^3.3.2",
+    "typescript": "^5.5.3"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "dependencies": {
+    "openai": "^4.96.0"
   }
 }
