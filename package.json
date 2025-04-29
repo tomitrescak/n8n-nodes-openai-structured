@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-openai-structured",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "description": "n8n node to call OpenAI Chat API with structured JSON schema using function calling.",
   "main": "dist/index.js",
   "scripts": {
@@ -11,10 +11,10 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/nodes/OpenAIStructuredChat.credentials.js"
+      "dist/nodes/OpenAIStructuredChat/OpenAIStructuredChat.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/OpenAIStructuredChat.node.js"
+      "dist/nodes/OpenAIStructuredChat/OpenAIStructuredChat.node.js"
     ]
   },
   "keywords": [
